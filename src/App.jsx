@@ -25,11 +25,14 @@ function App() {
   return (
     <AppContainer>
       <h2>React/Typesense Movies InstantSearch</h2>
-      <InstantSearch indexName="movies" searchClient={searchClient}>
+      <InstantSearch indexName="books" searchClient={searchClient}>
         <h4>Search Movies</h4>
         <SearchBox />
-        <RefinementList attribute="genres" />
-        <MoviesHits />
+        {/* <RefinementList attribute="genres" /> */}
+        {/* <div className="book-box"> */}
+          <MoviesHits />
+          {/* </div> */}
+        
         <Pagination />
       </InstantSearch>
     </AppContainer>

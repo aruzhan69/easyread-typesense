@@ -21,7 +21,7 @@ module.exports = (async () => {
   const typesense = new Typesense.Client(TYPESENSE_CONFIG);
 
   const schema = {
-    name: "movies",
+    name: "books",
     num_documents: 0,
     fields: [
       {
@@ -30,45 +30,13 @@ module.exports = (async () => {
         facet: false,
       },
       {
-        name: "overview",
-        type: "string",
-        facet: false,
-      },
-      {
-        name: "genres",
-        type: "string[]",
-        facet: true,
-      },
-      {
-        name: "genres.lvl0",
-        type: "string[]",
-        facet: true,
-      },
-      {
-        name: "genres.lvl1",
-        type: "string[]",
-        facet: true,
-        optional: true,
-      },
-      {
-        name: "genres.lvl2",
-        type: "string[]",
-        facet: true,
-        optional: true,
-      },
-      {
-        name: "release_date",
+        name: "price",
         type: "string",
         facet: true,
       },
       {
-        name: "popularity",
-        type: "float",
-        facet: true,
-      },
-      {
-        name: "vote_average",
-        type: "float",
+        name: "info",
+        type: "string",
         facet: true,
       },
       {
@@ -76,21 +44,26 @@ module.exports = (async () => {
         type: "string",
         facet: true,
       },
+      {
+        name: "storeName",
+        type: "string",
+        facet: false,
+      },
     ],
-    default_sorting_field: "popularity",
+    // default_sorting_field: "popularity",
   };
 
-  const movies = require("./data/popular-movies-with-genres.json");
+  const books = require("./data/products.json");
 
   try {
-    const collection = await typesense.collections("movies").retrieve();
-    console.log("Found existing collection of movies");
+    const collection = await typesense.collections("books").retrieve();
+    console.log("Found existing collection of books");
     console.log(JSON.stringify(collection, null, 2));
 
-    if (collection.num_documents !== movies.length) {
+    if (collection.num_documents !== books.length) {
       console.log("Collection has different number of documents than data");
       console.log("Deleting collection");
-      await typesense.collections("movies").delete();
+      await typesense.collections("books").delete();
     }
   } catch (err) {
     console.error(err);
@@ -103,31 +76,31 @@ module.exports = (async () => {
 
   console.log("Populating collection...");
 
-  movies.forEach(async (movie) => {
-    movie.image = BASE_IMAGE_PATH + movie.poster_path;
+  books.forEach(async (book) => {
+    book.image = book.image_path;
 
-    delete movie.poster_path;
-    delete movie.original_language;
-    delete movie.original_title;
-    delete movie.video;
-    delete movie.backdrop_path;
-    delete movie.vote_count;
-    delete movie.id;
-    delete movie.adult;
-    delete movie.genre_ids;
+    // delete book.image_path;
+    // delete book.original_language;
+    // delete book.original_title;
+    // delete book.video;
+    // delete book.backdrop_path;
+    // delete book.vote_count;
+    // delete book.id;
+    // delete book.adult;
+    // delete book.genre_ids;
 
-    movie.genres.forEach((genre, idx) => {
-      movie[`genres.lvl${idx}`] = [movie.genres.slice(0, idx + 1).join(">")];
-    });
+    // book.genres.forEach((genre, idx) => {
+    //   book[`genres.lvl${idx}`] = [book.genres.slice(0, idx + 1).join(">")];
+    // });
 
     //[Science Fiction], [Science Fiction > Action], [Science Fiction > Action > Adventure], [Science Fiction > Action > Adventure > Western]
   });
 
   try {
     const returnData = await typesense
-      .collections("movies")
+      .collections("books")
       .documents()
-      .import(movies);
+      .import(books);
 
     console.log("Return data: ", returnData);
   } catch (err) {

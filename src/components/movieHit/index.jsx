@@ -63,10 +63,13 @@ export function MovieHit(props) {
         <MovieHighlight hit={hit} attribute="title" />
       </Title>
       <Overview>
-        <MovieHighlight hit={hit} attribute="overview" />
+        <MovieHighlight hit={hit} attribute="storeName" />
+      </Overview>
+      <Overview>
+        <MovieHighlight hit={hit} attribute="info" />
       </Overview>
       <Rating>
-        <MovieHighlight hit={hit} attribute="vote_average" />
+        <MovieHighlight hit={hit} attribute="price" />
       </Rating>
     </HitContainer>
   );
