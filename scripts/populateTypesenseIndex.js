@@ -31,7 +31,7 @@ module.exports = (async () => {
       },
       {
         name: "price",
-        type: "string",
+        type: "int32",
         facet: true,
       },
       {
@@ -48,6 +48,11 @@ module.exports = (async () => {
         name: "storeName",
         type: "string",
         facet: false,
+      },
+      {
+        name: "link",
+        type: "string",
+        facet: true,
       },
     ],
     // default_sorting_field: "popularity",

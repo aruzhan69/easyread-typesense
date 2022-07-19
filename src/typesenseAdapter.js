@@ -18,7 +18,7 @@ export const typesenseAdapter = new TypesenseInstantsearchAdapter({
   additionalSearchParameters: {
     queryBy: "title,storeName",
     queryByWeights: "2,1",
-    numTypos: "1",
+    numTypos: "2",
     typoTokensThreshold: 1,
   },
 });

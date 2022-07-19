@@ -19,14 +19,16 @@ const AppContainer = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 1em 0;
+  background-color: #fef5e5;
 `;
 
+// beige color: ''rgb(210, 210, 229) 
 function App() {
   return (
     <AppContainer>
-      <h2>React/Typesense Movies InstantSearch</h2>
+      <h2>EasyRead</h2>
       <InstantSearch indexName="books" searchClient={searchClient}>
-        <h4>Search Movies</h4>
+        <h4>Найди любимые книги по низким ценам</h4>
         <SearchBox />
         {/* <RefinementList attribute="genres" /> */}
         {/* <div className="book-box"> */}

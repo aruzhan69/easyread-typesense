@@ -10,6 +10,7 @@ const HitsContainer = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
+  background-color: #fef5e5;
 `;
 
 function MoviesHits({ hits }) {
